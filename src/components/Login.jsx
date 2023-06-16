@@ -10,7 +10,9 @@ const Login = () => {
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className="relative w-ful h-full">
-        Login
+        <video 
+          src={shareVideo}
+        />
       </div>
     </div>
   )
