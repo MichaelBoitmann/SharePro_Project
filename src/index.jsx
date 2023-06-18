@@ -1,21 +1,39 @@
 import React from 'react';
-import { createRoot, ReactDOM } from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App.jsx';
 import './index.css';
 
 
-const root = createRoot(document.getElementById('root'));
-root.render(
+const roots = createRoot(document.getElementById('root')); 
+roots.render(
   <Router>
     <App />
   </Router>
+
 );
 
 
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
+
+// const root = createRoot(document.getElementById('root'));
+// root.render(
+//   <Router>
 //     <App />
-//   </React.StrictMode>,
+//   </Router>
+// );
+
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <Router>
+//     <App />
+//   </Router>,
 // )
+
+// ReactDOM.render(
+//   <Router>
+//     <App />
+//   </Router>,
+//   document.getElementById('root'),
+// );
