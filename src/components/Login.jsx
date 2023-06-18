@@ -29,7 +29,7 @@ const Login = () => {
             <img src={logo} width="130px" alt="logo" />
           </div>
           <div className="shadow-2xl">
-      
+            <GoogleOAuthProvider>
               <GoogleLogin
                 clientId=''
                 render={(renderProps) => (
@@ -46,7 +46,7 @@ const Login = () => {
                 onFailure={responseGoogle}
                 cookiePolicy=""
               />
-      
+            </GoogleOAuthProvider>
           </div>
         </div>
       </div>
