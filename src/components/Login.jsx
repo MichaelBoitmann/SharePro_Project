@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { GoogleLoginButton } from 'react-google-button'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
@@ -9,18 +10,37 @@ import logo from '../assets/logowhite.png';
 
 const Login = () => {
 
-  const responseGoogle=(response) => {
-    localStorage.setItem('user', JSON.stringify(response.profileObj));
-
-    const { name, googleId, imageUrl } = response.profileObj;
-
-    const doc = {
-      _id: googleId,
-      _type: 'user',
-      userName: name,
-      image: imageUrl,
-    }
+  const handleCallbackResponse = (response) => {
+    console.log("Encoded JWT ID token: " + response.credential);
   }
+
+  // 'google' will be called from index.html script before the title
+  useEffect(() => {
+    
+    google.accounts.id.initialize({      
+      client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      { theme: "outline", size: "large"}
+    )
+
+  }, []);
+
+  // const responseGoogle=(response) => {
+  //   localStorage.setItem('user', JSON.stringify(response.profileObj));
+
+  //   const { name, googleId, imageUrl } = response.profileObj;
+
+  //   const doc = {
+  //     _id: googleId,
+  //     _type: 'user',
+  //     userName: name,
+  //     image: imageUrl,
+  //   }
+  // }
 
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -39,22 +59,7 @@ const Login = () => {
             <img src={logo} width="130px" alt="logo" />
           </div>
           <div className="shadow-2xl">
-            <GoogleOAuthProvider
-              clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
-              render={(renderProps) => (
-                <button
-                  type="button"
-                  className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <FcGoogle className="mr-4" /> Sign in with google
-                </button>
-              )}
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy=""
-            </GoogleOAuthProvider>
+            <div id="signInDiv"></div>
           </div>
         </div>
       </div>
