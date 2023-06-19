@@ -1,4 +1,5 @@
 import React from 'react';
+import { GoogleLoginButton } from 'react-google-button'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,7 +10,16 @@ import logo from '../assets/logowhite.png';
 const Login = () => {
 
   const responseGoogle=(response) => {
+    localStorage.setItem('user', JSON.stringify(response.profileObj));
 
+    const { name, googleId, imageUrl } = response.profileObj;
+
+    const doc = {
+      _id: googleId,
+      _type: 'user',
+      userName: name,
+      image: imageUrl,
+    }
   }
 
   return (
@@ -29,23 +39,21 @@ const Login = () => {
             <img src={logo} width="130px" alt="logo" />
           </div>
           <div className="shadow-2xl">
-            <GoogleOAuthProvider>
-              <GoogleLogin
-                clientId=''
-                render={(renderProps) => (
-                  <button
-                    type="button"
-                    className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    <FcGoogle className="mr-4" /> Sin In With Google
-                  </button>
-                )}
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy=""
-              />
+            <GoogleOAuthProvider
+              clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
+              render={(renderProps) => (
+                <button
+                  type="button"
+                  className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <FcGoogle className="mr-4" /> Sign in with google
+                </button>
+              )}
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy=""
             </GoogleOAuthProvider>
           </div>
         </div>
