@@ -5,7 +5,7 @@ import { GoogleLoginButton } from 'react-google-button'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import shareVideo from '../assets/share.mp4';
+import shareVideo from '../assets/elex_test.mp4';
 import logo from '../assets/logowhite.png';
 
 
@@ -87,8 +87,7 @@ const Login = () => {
                 <h3>{user.name}</h3>
               </div>
             }
-          </div>
-          
+          </div>          
         </div>
       </div>
     </div>
