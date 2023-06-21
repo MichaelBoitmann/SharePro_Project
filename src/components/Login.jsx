@@ -4,18 +4,39 @@ import jwt_decode from 'jwt-decode';
 // import dotenv from 'dotenv';
 // import { GoogleLoginButton } from 'react-google-button'
 // import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/elex_test.mp4';
 import logo from '../assets/sharepro.png.jpg';
 
+import { client } from '../client';
+
 // dotenv.config();
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const [ user, setUser ] = useState({});
 
   const handleCallbackResponse = (response) => {
+    localStorage.setItem('user'. JSON.stringify(response.profileObj));
+
+    const { name, googleId, imageUrl } = response.profileObj;
+
+    client.createIfNotExists
+
+    const doc = {
+      _id: googleId,
+      _type: 'user',
+      userName: name,
+      image: imageUrl,
+    }
+
+    client.createIfNotExists(doc)
+      .then(() => {
+        navigate('/', { replace: true })
+      })
+
     console.log("Encoded JWT ID token: " + response.credential);
     var userObject = jwt_decode(response.credential);
     console.log(userObject);
@@ -74,18 +95,21 @@ const Login = () => {
         <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay text-orange-100 text-xl">
           
           <div className="p-5">
-            <img src={logo} width="130px" alt="logo" />
+            <img className="rounded-lg" src={logo} width="230px" alt="logo" />
           </div>
           <div className="shadow-2xl"  >
             <div id="GoogleSignInDiv" />
             { Object.keys(user).length != 0 &&
-              <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
+              <div className=''>
+                <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
+              </div>
+              
             }
 
             { user && 
-              <div className="bg-mainColor flex justify-center items-centerp-3 rounded-lg cursor-pointer outline-none">
-                <img src={user.picture}></img>
-                <h3>{user.name}</h3>
+              <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black p-1">
+                <img className="rounded-lg" src={user.picture}></img>
+                <h3 className="pl-2 pr-3">{user.name}</h3>
               </div>
             }
           </div>          
