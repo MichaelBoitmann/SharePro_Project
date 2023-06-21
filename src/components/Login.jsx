@@ -1,13 +1,15 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-import { GoogleLoginButton } from 'react-google-button'
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
+// import dotenv from 'dotenv';
+// import { GoogleLoginButton } from 'react-google-button'
+// import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+// import { useNavigate } from 'react-router-dom';
+// import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/elex_test.mp4';
-import logo from '../assets/logowhite.png';
+import logo from '../assets/sharepro.png.jpg';
 
+// dotenv.config();
 
 const Login = () => {
 
@@ -18,43 +20,44 @@ const Login = () => {
     var userObject = jwt_decode(response.credential);
     console.log(userObject);
     setUser(userObject);
-    document.getElementById("signInDiv").hidden = true;
+    document.getElementById("GoogleSignInDiv").hidden = true;
   }
-
 
   const handleSignOut = (event) => {
     setUser();
-    document.getElementById("signInDiv").hidden = false;
+    document.getElementById("GoogleSignInDiv").hidden = false;
   }
 
   // google will be called from index.html script before the title
   useEffect(() => {
+
+    // function that will include the google account client link instead
+    // of running it from index.html
+    const initializeGoogleSignIn = async () => {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
     
-    google.accounts.id.initialize({      
-      client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    });
+      google.accounts.id.initialize({      
+        client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
+        callback: handleCallbackResponse
+      });
 
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      { theme: "outline", size: "large"}
-    )
+      google.accounts.id.renderButton(
+        document.getElementById("GoogleSignInDiv"),
+        { theme: "outline", size: "large"}
+      );      
+    };
 
-    google.accounts.id.prompt();
+      initializeGoogleSignIn();
+      google.accounts.id.prompt();
   }, []);
 
-  // const responseGoogle=(response) => {
-  //   localStorage.setItem('user', JSON.stringify(response.profileObj));
-
-  //   const { name, googleId, imageUrl } = response.profileObj;
-
-  //   const doc = {
-  //     _id: googleId,
-  //     _type: 'user',
-  //     userName: name,
-  //     image: imageUrl,
-  //   }
-  // }
 
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -73,16 +76,14 @@ const Login = () => {
           <div className="p-5">
             <img src={logo} width="130px" alt="logo" />
           </div>
-          <div >
-            <div id="signInDiv"></div>
-            {  Object.keys(user).length != 0 &&
+          <div className="shadow-2xl"  >
+            <div id="GoogleSignInDiv" />
+            { Object.keys(user).length != 0 &&
               <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
             }
-            <br />
-            <br />
 
             { user && 
-              <div>
+              <div className="bg-mainColor flex justify-center items-centerp-3 rounded-lg cursor-pointer outline-none">
                 <img src={user.picture}></img>
                 <h3>{user.name}</h3>
               </div>
