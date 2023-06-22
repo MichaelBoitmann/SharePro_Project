@@ -15,34 +15,27 @@ import { client } from '../client';
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [ user, setUser ] = useState({});
-
   const handleCallbackResponse = (response) => {
     localStorage.setItem('user'. JSON.stringify(response.profileObj));
-
     const { name, googleId, imageUrl } = response.profileObj;
-
-    client.createIfNotExists
-
     const doc = {
       _id: googleId,
       _type: 'user',
       userName: name,
       image: imageUrl,
-    }
+    };
 
-    client.createIfNotExists(doc)
-      .then(() => {
-        navigate('/', { replace: true })
-      })
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true })
+    });
 
     console.log("Encoded JWT ID token: " + response.credential);
     var userObject = jwt_decode(response.credential);
     console.log(userObject);
     setUser(userObject);
     document.getElementById("GoogleSignInDiv").hidden = true;
-  }
+  };
 
   const handleSignOut = (event) => {
     setUser();
@@ -76,7 +69,7 @@ const Login = () => {
     };
 
       initializeGoogleSignIn();
-      google.accounts.id.prompt();
+      // google.accounts.id.prompt();
   }, []);
 
 
@@ -98,20 +91,18 @@ const Login = () => {
             <img className="rounded-lg" src={logo} width="230px" alt="logo" />
           </div>
           <div className="shadow-2xl"  >
-            <div id="GoogleSignInDiv" />
-            { Object.keys(user).length != 0 &&
-              <div className=''>
+            <div id="GoogleSignInDiv">
+              { Object.keys(user).length != 0 &&          
                 <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
-              </div>
-              
-            }
+              }
 
-            { user && 
-              <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black p-1">
-                <img className="rounded-lg" src={user.picture}></img>
-                <h3 className="pl-2 pr-3">{user.name}</h3>
-              </div>
-            }
+              { user && 
+                <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black">
+                  <img className="rounded-lg" src={user.picture}></img>
+                  <h3 className="pl-2 pr-3">{user.name}</h3>
+                </div>
+              }
+            </div>
           </div>          
         </div>
       </div>
