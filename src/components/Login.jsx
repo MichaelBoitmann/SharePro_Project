@@ -9,22 +9,48 @@ import { useNavigate } from 'react-router-dom';
 import shareVideo from '../assets/elex_test.mp4';
 import logo from '../assets/sharepro.png.jpg';
 
-import { client } from '../client';
+import { client } from '../client.jsx';
 
 // dotenv.config();
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [ user, setUser ] = useState({});
+
+  // const handleCallbackResponse = (response) => {
+  //   localStorage.setItem('user', JSON.stringify(response.profileObj));
+  //   const { name, googleId, imageUrl } = response.profileObj;
+  //   const doc = {
+  //     _id: googleId,
+  //     _type: 'user',
+  //     userName: name,
+  //     image: imageUrl,
+  //   };
+
   const handleCallbackResponse = (response) => {
-    localStorage.setItem('user'. JSON.stringify(response.profileObj));
-    const { name, googleId, imageUrl } = response.profileObj;
-    const doc = {
-      _id: googleId,
-      _type: 'user',
-      userName: name,
-      image: imageUrl,
-    };
+    if (response && response.profileObj) {
+      const { name, googleId, imageUrl } = response.profileObj;
+  
+      localStorage.setItem('user', JSON.stringify(response.profileObj));
+  
+      const doc = {
+        _id: googleId,
+        _type: 'user',
+        userName: name,
+        image: imageUrl,
+      };
+  
+    } else {
+      // Handle the case when `response.profileObj` is undefined or doesn't exist
+      console.log('Error: Missing profile information');
+      // You can display an error message, redirect the user, or take any other appropriate action
+      // For example:
+      // setError('Error: Missing profile information');
+      // history.push('/login');
+
+    }
+  
 
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true })
@@ -37,7 +63,7 @@ const Login = () => {
     document.getElementById("GoogleSignInDiv").hidden = true;
   };
 
-  const handleSignOut = (event) => {
+  const handleSignOut = () => {
     setUser();
     document.getElementById("GoogleSignInDiv").hidden = false;
   }
@@ -90,7 +116,7 @@ const Login = () => {
           <div className="p-5">
             <img className="rounded-lg" src={logo} width="230px" alt="logo" />
           </div>
-          <div className="shadow-2xl"  >
+          <div className="shadow-2xl">
             <div id="GoogleSignInDiv">
               { Object.keys(user).length != 0 &&          
                 <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
@@ -107,7 +133,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
