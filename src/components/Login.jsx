@@ -40,6 +40,9 @@ const Login = () => {
         userName: name,
         image: imageUrl,
       };
+      client.createIfNotExists(doc).then(() => {
+        navigate('/', { replace: true })
+      });
   
     } else {
       // Handle the case when `response.profileObj` is undefined or doesn't exist
@@ -50,11 +53,6 @@ const Login = () => {
       // history.push('/login');
 
     }
-  
-
-    client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true })
-    });
 
     console.log("Encoded JWT ID token: " + response.credential);
     var userObject = jwt_decode(response.credential);
