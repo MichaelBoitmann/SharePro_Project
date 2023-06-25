@@ -109,15 +109,14 @@ const Login = () => {
           autoPlay
           className="w-full h-full object-cover"
         />
-        <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay text-orange-100 text-xl">
-          
+        <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay text-orange-100 text-xl">          
           <div className="p-5">
             <img className="rounded-lg" src={logo} width="230px" alt="logo" />
           </div>
           <div className="shadow-2xl">
             <div id="GoogleSignInDiv">
               { Object.keys(user).length != 0 &&          
-                <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
+                <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
               }
 
               { user && 
