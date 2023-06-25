@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 // import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/elex_test.mp4';
-import logo from '../assets/sharepro.png.jpg';
+import logo from '../assets/sharepro.png';
 
 import { client } from '../client.jsx';
 
