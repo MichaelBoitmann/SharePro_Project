@@ -12,13 +12,13 @@ const categories = [
   { name: 'Animals'},
   { name: 'WallPapers'},
   { name: 'Photography'},
+  { name: 'Coding'},
   { name: 'Gaming'},
-  { name: 'Coding'}
 ]
 
-const Sidebar = ({ user, closeToggle }) => {
+const Sidebar = ({ closeToggle, user  }) => {
   const handleCloseSidebar = () => {
-    if(closeToggle) closeToggle(false);
+    if (closeToggle) closeToggle(false);
   }
 
 
@@ -27,7 +27,7 @@ const Sidebar = ({ user, closeToggle }) => {
       <div className="flex flex-col">
         <Link
           to="/"
-          className="flex px-5 gap-2 my-6 pt-1 w-190 items-"
+          className="flex px-5 gap-2 my-6 pt-1 w-190 items-center"
           onClick={handleCloseSidebar}
         >
           <img src={logo} alt="logo" className="w-full" />  
@@ -35,19 +35,20 @@ const Sidebar = ({ user, closeToggle }) => {
         <div className="flex flex-col gap-5">
           <NavLink
             to="/"
-            className={({ isActive}) => isActive ? isActiveStyle : isNotActiveStyle }
+            className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
             onClick={handleCloseSidebar}
           >
             <RiHomeFill />Home
           </NavLink>
           <h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover Categories</h3>
-          {categories.slice(0, categories.length - 1).map((category) => (
+          {categories.slice(0, categories.length).map((category) => (
             <NavLink
               to={`/category/${category.name}`}
-              className={({ isActive}) => isActive ? isActiveStyle : isNotActiveStyle }
+              className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
               onClick={handleCloseSidebar}
               key={category.name}
             >
+              <img src={category.image} className="w-8 h-8 rounded-full shadow-sm" />
               {category.name}
             </NavLink>
           ))}
@@ -56,7 +57,8 @@ const Sidebar = ({ user, closeToggle }) => {
       {user && (
         <Link
           to={`user-profile/${user._id}`}
-          className=""
+          className="flex my-5 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3"
+          onClick={handleCloseSidebar}
         >
           <img src={user.image} className="w-10 h-10 rounded-full" alt="user-profile" />
           <p>{user.userName}</p>
