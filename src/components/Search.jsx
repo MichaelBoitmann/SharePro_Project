@@ -3,7 +3,7 @@ import React from 'react'
 const Search = () => {
   return (
     <div>
-      Search
+      Michael
     </div>
   )
 }

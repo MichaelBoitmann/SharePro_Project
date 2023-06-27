@@ -19,7 +19,7 @@ const categories = [
 const Sidebar = ({ closeToggle, user  }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
-  }
+  };
 
 
   return (
