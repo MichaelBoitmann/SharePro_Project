@@ -50,13 +50,13 @@ const Login = () => {
       // You can display an error message, redirect the user, or take any other appropriate action
       // For example:
       // setError('Error: Missing profile information');
-      // history.push('/login');
+      history.push('/login');
 
     }
 
-    console.log("Encoded JWT ID token: " + response.credential);
+    // console.log("Encoded JWT ID token: " + response.credential);
     var userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    // console.log(userObject);
     setUser(userObject);
     document.getElementById("GoogleSignInDiv").hidden = true;
   };
@@ -115,10 +115,11 @@ const Login = () => {
           </div>
           <div className="shadow-2xl">
             <div id="GoogleSignInDiv">
-              { Object.keys(user).length != 0 &&          
-                <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
+              { Object.keys(user).length != 0 && 
+                <div>
+                  <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
+                </div>    
               }
-
               { user && 
                 <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black">
                   <img className="rounded-lg" src={user.picture}></img>
