@@ -6,12 +6,23 @@ import BrickLayout from './BrickLayout';
 import Spinner from './Spinner';
 
 const Feed = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const { categoryId } = useParams();
+
+  useEffect(() => {
+    if(categoryId) {
+
+    } else {
+      
+    }
+  }, [categoryId])
 
   if(loading) return <Spinner message="We are adding new ideas to your feed!" />
+
   return (
     <div>
-      Feed
+      Feeds
     </div>
   );
 };

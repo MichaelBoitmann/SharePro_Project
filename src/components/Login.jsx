@@ -93,7 +93,7 @@ const Login = () => {
     };
 
       initializeGoogleSignIn();
-      // google.accounts.id.prompt();
+      google.accounts.id.prompt();
   }, []);
 
 

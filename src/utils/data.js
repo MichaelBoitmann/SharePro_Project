@@ -143,22 +143,22 @@ export const searchQuery = (searchTerm) => {
             url
           }
         },
+        _id,
+        destination,
+        postedBy->{
+          _id,
+          userName,
+          image
+        },
+        save[]{
+          _key,
+          postedBy->{
             _id,
-            destination,
-            postedBy->{
-              _id,
-              userName,
-              image
-            },
-            save[]{
-              _key,
-              postedBy->{
-                _id,
-                userName,
-                image
-              },
-            },
-          }`;
+            userName,
+            image
+          },
+        },
+  }`;
   return query;
 };
 

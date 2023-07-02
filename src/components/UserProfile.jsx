@@ -3,7 +3,7 @@ import React from 'react'
 const UserProfile = () => {
   return (
     <div>
-      <h1>UserProfile</h1>
+      <h1>UserProfiles</h1>
     </div>
   )
 };

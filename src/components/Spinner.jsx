@@ -3,17 +3,17 @@ import { RotatingLines } from 'react-loader-spinner';
 
 const Spinner = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      {/* <RotatingLines
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <RotatingLines
         type="Circles"
         color="00BFFF"
-        strokeColor="red"
+        strokeColor="orange"
         strokeWidth="5"
         animationDuration="0.75"
         width="96"
         visible={true}
         className="m-5"
-      /> */}
+      />
     </div>
   );
 };

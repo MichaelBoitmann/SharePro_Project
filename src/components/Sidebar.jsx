@@ -14,11 +14,12 @@ const categories = [
   { name: 'Photography'},
   { name: 'Coding'},
   { name: 'Gaming'},
+  { name: 'Others'},
 ]
 
 const Sidebar = ({ closeToggle, user  }) => {
   const handleCloseSidebar = () => {
-    if (closeToggle) closeToggle(false);
+    if(closeToggle) closeToggle(false);
   };
 
 
@@ -41,10 +42,10 @@ const Sidebar = ({ closeToggle, user  }) => {
             <RiHomeFill />Home
           </NavLink>
           <h3 className="mt-2 px-5 text-base 3xl:text-xl">Discover Categories</h3>
-          {categories.slice(0, categories.length).map((category) => (
+          {categories.slice(0, categories.length - 1).map((category) => (
             <NavLink
               to={`/category/${category.name}`}
-              className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
+              className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
               onClick={handleCloseSidebar}
               key={category.name}
             >

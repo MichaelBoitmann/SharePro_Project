@@ -12,10 +12,7 @@ roots.render(
   <Router>
     <App />
   </Router>
-
 );
-
-
 
 // const root = createRoot(document.getElementById('root'));
 // root.render(
@@ -35,5 +32,5 @@ roots.render(
 //   <Router>
 //     <App />
 //   </Router>,
-//   document.getElementById('root'),
-// );
+//   document.getElementById('root')
+// )
