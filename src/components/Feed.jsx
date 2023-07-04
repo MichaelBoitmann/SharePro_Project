@@ -6,7 +6,7 @@ import BrickLayout from './BrickLayout';
 import Spinner from './Spinner';
 
 const Feed = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { categoryId } = useParams();
 

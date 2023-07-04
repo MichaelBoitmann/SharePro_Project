@@ -1,16 +1,16 @@
 import React from 'react';
-import { RotatingLines } from 'react-loader-spinner';
+import { Circles } from 'react-loader-spinner';
 
-const Spinner = () => {
+const Spinner = ({ message }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <RotatingLines
-        type="Circles"
-        color="00BFFF"
-        strokeColor="orange"
-        strokeWidth="5"
-        animationDuration="0.75"
-        width="96"
+      <Circles
+        height="60"
+        width="60"
+        color="#4fa94d"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
         visible={true}
         className="m-5"
       />
