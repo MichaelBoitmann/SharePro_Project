@@ -27,8 +27,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    scrollRef.current.scrollTo(0, 0)
-  }, [])
+    scrollRef.current.scrollTo(0, 0);
+  });
 
 
   return (
@@ -40,7 +40,7 @@ const Home = () => {
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
           <HiMenu fontSize={40} className="cursor-pointer" onClick={() => setToggleSidebar(true)} />
           <Link to="/">
-            <img src={logo} alt="logo" className="w-28" />
+            <img src={logo} alt="logo" className="w-20" />
           </Link>
           <Link to={`user-profile/${user?._id}`}>
             <img src={user?.image} alt="user-pic" className="w-19 h-19 rounded-full" />
