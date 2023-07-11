@@ -19,7 +19,24 @@ const Pin = ({ pin: { postedBy, image, _id, destination }}) => {
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
         onClick={() => Navigate('/pin-detail/${_id}')}
+        className="relative cursor-zoom-in w-auto"
       >
+        <img className="rounded-lg w-full" alt="user-post" src={user} />
+        {postHoverd && (
+          <div
+            className="absolute top-0 w-full h-full flex flex-col"
+            style={{ height: '100%'}}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex gap-2">
+                <a 
+                  href={`${image?.asset?.url}?dl=`}>
+
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
 
