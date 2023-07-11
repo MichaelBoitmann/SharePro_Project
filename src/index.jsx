@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import App from './App.jsx';
+import App from './App';
 import './index.css';
 
 
@@ -32,5 +32,5 @@ roots.render(
 //   <Router>
 //     <App />
 //   </Router>,
-//   document.getElementById('root')
+//   document.getElementById('root'),
 // )

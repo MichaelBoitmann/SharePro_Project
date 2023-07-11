@@ -7,10 +7,18 @@ import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { client, urlFor } from '../client';
 
 const Pin = ({ pin: { postedBy, image, _id, destination }}) => {
+
+  const [ postHoverd, setPostHovered ] = useState(false);
+  const [ savingPost, setSavingPost ] = useState(false);
+  const navigate = useNavigate();
+
+
   return (
     <div>
       <div
         onMouseEnter={() => setPostHovered(true)}
+        onMouseLeave={() => setPostHovered(false)}
+        onClick={() => Navigate('/pin-detail/${_id}')}
       >
 
       </div>

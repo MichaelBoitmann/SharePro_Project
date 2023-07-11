@@ -7,7 +7,7 @@ const Spinner = ({ message }) => {
       <Circles
         height="60"
         width="60"
-        color="#4fa94d"
+        color="skyblue"
         ariaLabel="circles-loading"
         wrapperStyle={{}}
         wrapperClass=""
