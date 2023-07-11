@@ -12,8 +12,8 @@ import logo from '../assets/sharepro.png';
 
 const Home = () => {
 
-  const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [user, setUser] = useState(null);
+  const [ toggleSidebar, setToggleSidebar ] = useState(false);
+  const [ user, setUser ] = useState({});
   const scrollRef = useRef(null);
 
   const userInfo = localStorage.getItem('user') != 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
@@ -52,7 +52,7 @@ const Home = () => {
             <img src={user?.image} alt="user" className="w-19 h-19 rounded-full" />
           </Link>
         </div>
-        {toggleSidebar && (
+        { toggleSidebar && (
           <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
             <div className="absolute w-full flex justify-end items-center p-2">
               <AiFillCloseCircle 
@@ -61,14 +61,14 @@ const Home = () => {
                 onClick={() => setToggleSidebar(false)}
               />
             </div>
-            <Sidebar user={user && user} closeToggle={setToggleSidebar} />
+            <Sidebar user={ user && user } closeToggle={setToggleSidebar} />
           </div>
         )}
       </div>
-      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={ scrollRef }>
         <Routes>
-          <Route path="/user-profile/:userId" element={<UserProfile />} />
-          <Route path="/*" element={<Pins user={user && user} />} />
+          <Route path="/user-profile/:userId" element={ <UserProfile /> } />
+          <Route path="/*" element={ <Pins user={ user && user } /> } />
         </Routes>
       </div>
     </div>

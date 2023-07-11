@@ -1,76 +1,37 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-// import dotenv from 'dotenv';
-// import { GoogleLoginButton } from 'react-google-button'
-// import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-// import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/elex_test.mp4';
 import logo from '../assets/sharepro.png';
 
 import { client } from '../client.jsx';
 
-// dotenv.config();
-
 const Login = () => {
-  const navigate = useNavigate();
-
   const [ user, setUser ] = useState({});
 
-  // const handleCallbackResponse = (response) => {
-  //   localStorage.setItem('user', JSON.stringify(response.profileObj));
-  //   const { name, googleId, imageUrl } = response.profileObj;
-  //   const doc = {
-  //     _id: googleId,
-  //     _type: 'user',
-  //     userName: name,
-  //     image: imageUrl,
-  //   };
-
   const handleCallbackResponse = (response) => {
-    if (response && response.profileObj) {
-      const { name, googleId, imageUrl } = response.profileObj;
-  
-      localStorage.setItem('user', JSON.stringify(response.profileObj));
-  
-      const doc = {
-        _id: googleId,
-        _type: 'user',
-        userName: name,
-        image: imageUrl,
-      };
-      client.createIfNotExists(doc).then(() => {
-        navigate('/', { replace: true })
-      });
-  
-    } else {
-      // Handle the case when `response.profileObj` is undefined or doesn't exist
-      console.log('Error: Missing profile information');
-      // You can display an error message, redirect the user, or take any other appropriate action
-      // For example:
-      // setError('Error: Missing profile information');
-      history.push('/login');
-
-    }
-
     console.log("Encoded JWT ID token: " + response.credential);
-    var userObject = jwt_decode(response.credential);
+    const userObject = jwt_decode(response.credential);
     console.log(userObject);
     setUser(userObject);
     document.getElementById("GoogleSignInDiv").hidden = true;
   };
 
-  const handleSignOut = () => {
-    setUser();
+  function handleSignOut(event) {
+    setUser({});
     document.getElementById("GoogleSignInDiv").hidden = false;
   }
 
-  // google will be called from index.html script before the title
-  useEffect(() => {
+  // function onSignIn(googleUser) {
+  //   var profile = googleUser.getBasicProfile();
+  //   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  //   console.log('Name: ' + profile.getName());
+  //   console.log('Image URL: ' + profile.getImageUrl());
+  //   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  // }
 
-    // function that will include the google account client link instead
-    // of running it from index.html
+  useEffect(() => {
     const initializeGoogleSignIn = async () => {
       await new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -79,23 +40,23 @@ const Login = () => {
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
-      });
-    
-      google.accounts.id.initialize({      
-        client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
-        callback: handleCallbackResponse
-      });
-
-      google.accounts.id.renderButton(
-        document.getElementById("GoogleSignInDiv"),
-        { theme: "outline", size: "large"}
-      );      
+      });    
+      initializeGoogleSignIn();
     };
 
-      initializeGoogleSignIn();
-      google.accounts.id.prompt();
-  }, []);
+    
+    google.accounts.id.initialize({      
+      client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    });
 
+    google.accounts.id.renderButton(
+      document.getElementById("GoogleSignInDiv"),
+      { theme: "filled_blue", size: "large"}
+    );   
+    
+    // google.accounts.id.prompt();
+  }, []);
 
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -113,12 +74,11 @@ const Login = () => {
           <div className="p-5">
             <img className="rounded-lg" src={logo} width="230px" alt="logo" />
           </div>
-          <div className="shadow-2xl">
+          <div className="g-signin2 shadow-2xl" data-onsuccess="onSignIn">
             <div id="GoogleSignInDiv">
-              { Object.keys(user).length != 0 && 
-                <div>
-                  <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
-                </div>    
+              { Object.keys(user).length != 0 &&               
+                <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
+                
               }
               { user && 
                 <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black">

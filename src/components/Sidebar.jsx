@@ -36,7 +36,7 @@ const Sidebar = ({ closeToggle, user  }) => {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
-            onClick={handleCloseSidebar}
+            onClick={ handleCloseSidebar }
           >
             <RiHomeFill />Home
           </NavLink>
@@ -45,11 +45,11 @@ const Sidebar = ({ closeToggle, user  }) => {
             <NavLink
               to={`/category/${category.name}`}
               className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
-              onClick={handleCloseSidebar}
-              key={category.name}
+              onClick={ handleCloseSidebar }
+              key={ category.name }
             >
-              <img src={category.image} className="w-8 h-8 rounded-full shadow-sm" />
-              {category.name}
+              <img src={ category.picture } className="w-8 h-8 rounded-full shadow-sm" />
+              { category.name }
             </NavLink>
           ))}
         </div>
@@ -58,7 +58,7 @@ const Sidebar = ({ closeToggle, user  }) => {
         <Link
           to={`user-profile/${user._id}`}
           className="flex my-5 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3"
-          onClick={handleCloseSidebar}
+          onClick={ handleCloseSidebar }
         >
           <img src={user.image} className="w-10 h-10 rounded-full" alt="user-profile" />
           <p>{user.userName}</p>
