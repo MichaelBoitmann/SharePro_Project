@@ -6,7 +6,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { Sidebar, UserProfile } from '../components';
 import { userQuery } from '../utils/data';
 import { client } from '../client';
-import { fetchUser } from './utils/fetchUser';
+import { fetchUser } from '../utils/fetchUser';
 import Pins from './Pins';
 import logo from '../assets/sharepro.png';
 

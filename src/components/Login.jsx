@@ -55,7 +55,7 @@ const Login = () => {
       { theme: "filled_blue", size: "large"}
     );   
     
-    // google.accounts.id.prompt();
+    google.accounts.id.prompt();
   }, []);
 
   return (
@@ -78,11 +78,10 @@ const Login = () => {
             <div id="GoogleSignInDiv">
               { Object.keys(user).length != 0 &&               
                 <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
-                
               }
               { user && 
                 <div className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none text-black">
-                  <img className="rounded-lg" src={user.picture}></img>
+                  <img className="rounded-lg" src={user.picture} alt="user-picture"></img>
                   <h3 className="pl-2 pr-3">{user.name}</h3>
                 </div>
               }
