@@ -16,12 +16,35 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
 
   const alreadySaved = save?.filter((item) => item.postedBy._id === user.googleId);
 
+  const savePin = (id) => {
+    if(!alreadySaved) {
+      setSavingPost(true);
+
+      client
+        .patch(id)
+        .setIfMissing({ save: [] })
+        .inser('after', 'save[-1]', [{
+          _key: uuidv4(),
+          userId: user.googleId,
+          postedBy: {
+            _type: 'postedBy',
+            _ref: user.googleId,
+          }
+        }])
+        .commit()
+        .then(() => {
+          window.location.reload();
+          setSavingPost(false);
+        })
+    }
+  }
+
   return (
     <div className="m-2">
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
-        onClick={() => navigate('/pin-detail/${_id}')}
+        onClick={() => navigate(`/pin-detail/${_id}`)}
         className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         <img className="rounded-lg w-full" alt="user-post" src={(urlFor(image).width(250).url())} />
@@ -35,7 +58,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
                 <a 
                   href={`${image?.asset?.url}?dl=`}
                   download
-                  onClisck={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
                   className="bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
                 >
                   <MdDownloadForOffline />
@@ -53,10 +76,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
             </div>
           </div>
         )}
-
       </div>
-
-
       <img 
         className="rounded-lg w-full" 
         alt="user-post" 
