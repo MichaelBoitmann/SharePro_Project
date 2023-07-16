@@ -7,19 +7,19 @@ import App from './App';
 import './index.css';
 
 
-const roots = createRoot(document.getElementById('root')); 
-roots.render(
-  <Router>
-    <App />
-  </Router>
-);
-
-// const root = createRoot(document.getElementById('root'));
-// root.render(
+// const roots = createRoot(document.getElementById('root')); 
+// roots.render(
 //   <Router>
 //     <App />
 //   </Router>
 // );
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <Router>
+    <App />
+  </Router>
+);
 
 
 // ReactDOM.createRoot(document.getElementById('root')).render(
