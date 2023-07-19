@@ -23,13 +23,13 @@ const Login = () => {
     document.getElementById("GoogleSignInDiv").hidden = false;
   }
 
-  function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
+  // function onSignIn(googleUser) {
+  //   var profile = googleUser.getBasicProfile();
+  //   console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  //   console.log('Name: ' + profile.getName());
+  //   console.log('Image URL: ' + profile.getImageUrl());
+  //   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  // }
 
   useEffect(() => {
     // const initializeGoogleSignIn = async () => {
@@ -76,18 +76,17 @@ const Login = () => {
           <div className="shadow-2xl">
             <div id="GoogleSignInDiv"></div>
             {Object.keys(user).length != 0 && 
-              <button
-                type="button" 
-                className="bg-mainColor cursor-pointer flex items-center justify-top p-3 rounded-lg outline-none"
-                onClick={(e) => handleSignOut(e)}
-              >Sign Out</button>               
-            }
-            { user && 
               <div>
+                <button
+                  type="button" 
+                  className="bg-mainColor cursor-pointer flex items-center justify-top p-3 rounded-lg outline-none"
+                  onClick={(e) => handleSignOut(e)}
+                >Sign Out</button> 
                 <img className="rounded-lg" src={ user.picture } alt="google user id"/>
                 <h3 className="pl-2 pr-3">{ user.name }</h3>
-              </div>
-            }            
+              </div>         
+            }
+         
           </div>          
         </div>
       </div>

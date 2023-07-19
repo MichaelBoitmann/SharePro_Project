@@ -11,10 +11,12 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
 
   const [ postHoverd, setPostHovered ] = useState(false);
   const [ savingPost, setSavingPost ] = useState(false);
+
   const navigate = useNavigate();
+
   const user = fetchUser();
 
-  const alreadySaved = save?.filter((item) => item.postedBy._id === user.googleId);
+  const alreadySaved = save?.filter((item) => item.postedBy._id === user.googleId)?.length;
 
   const savePin = (id) => {
     if(!alreadySaved) {
@@ -64,14 +66,32 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
                   <MdDownloadForOffline />
                 </a>
               </div>
-              {alreadySaved?.length !== 0 ? (
-                <button>
+              {alreadySaved ? (
+                <button type="button" className="bg-red=500">{save?.length}
                   Saved
                 </button>
               ): (
-                <button>
+                <button 
+                onClick={(e) => {
+                  e.stopPropagation()
+                  savePin(_id);
+                }} 
+                  type="button" 
+                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
                   Save
                 </button>
+              )}
+            </div>
+            <div className="flex justify-between items-center gap-2 w-full">
+              {destination && (
+                <a
+                  href={destination}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:100 hover:shadow-md"
+                >
+                  <BsFillArrowUpRightCircleFill />
+                </a>
               )}
             </div>
           </div>
