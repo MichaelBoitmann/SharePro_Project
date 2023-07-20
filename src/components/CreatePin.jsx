@@ -28,7 +28,7 @@ const CreatePin = ({ user }) => {
       setLoading(true);
 
       client.assets
-        .upload('mage', e.target.files[0], { contentType: type, filename: newFilename})
+        .upload('image', e.target.files[0], { contentType: type, filename: name})
         .then((document) => {
           setImageAsset(document);
           setLoading(false);
@@ -38,6 +38,30 @@ const CreatePin = ({ user }) => {
         })
     } else {
       setWrongImageType(true);
+    };
+  };
+
+  const savePin = () => {
+    if(title && about && destination && imageAsset?_id && category) {
+      const doc = {
+        _type: 'pin',
+        title,
+        about,
+        destination,
+        image: {
+          _type: 'image',
+          asset: {
+            _type: 'reference',
+            _ref: imageAsset?._id
+          }
+        },
+        userId: user._id,
+        postedBy: {
+          _type: 'postedBy',
+          _ref: user._id,
+        },
+        category,
+      }
     }
   }
 
@@ -78,14 +102,71 @@ const CreatePin = ({ user }) => {
                 <button
                   type="button"
                   className="absolute bottom-3 right-3 rounded-full bg-white text-xl cursor-pointer lutline-non hover:shadow-md transition-all duration-500 ease-in-out"
-                  onCanPlay={() => setImageAsset(null)}
+                  onClick={() => setImageAsset(null)}
                 >
-
+                  <MdDelete />
                 </button>
               </div>                        
             )}
           </div>
-
+        </div>
+        <div className="flex flex-col flex-1 gap-6 lg:pl-5 mt-5 w-full">
+          <input 
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Add your title here"
+            className="outline-none text-3xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
+          />
+          {user && (
+            <div className="flex gap-2 my-2 items-center bg-white rounded-lg">
+              <img 
+                src={user.picture}
+                className="w-10 h-10 rounded-full"
+                alt="user-profile"
+              />
+              <p className="font-bold">{user.userName}</p>
+            </div>
+          )}
+          <input 
+            type="text"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+            placeholder="What is your pin about?"
+            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+          />
+          <input 
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            placeholder="Add a destination link"
+            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+          />
+          <div className="flex flex-col">
+            <div>
+              <p className="mb-2 font-semibold text-lg sm:text-xl">Choose Pin Category</p>
+              <select
+                onChange={(e) => setCategory(e.target.value)}
+                className="outline-none w-4/5 border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
+              >
+                <option value="other" className="bg-white">Select Category</option>
+                {categories.map((category) => (
+                  <option 
+                    className="text-base border-0 outline-none capitalize bg-white text-black" 
+                    value={category.name}>{category.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-end items-end mt-5">
+              <button
+                type="button"
+                onClick={savePin}
+                className="bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none"
+              >
+              Save Pin
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
