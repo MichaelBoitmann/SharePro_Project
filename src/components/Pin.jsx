@@ -10,17 +10,13 @@ import { fetchUser } from '../utils/fetchUser';
 const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
 
   const [ postHoverd, setPostHovered ] = useState(false);
-  const [ savingPost, setSavingPost ] = useState(false);
-
   const navigate = useNavigate();
-
   const user = fetchUser();
 
   const alreadySaved = save?.filter((item) => item.postedBy._id === user.googleId)?.length;
 
   const savePin = (id) => {
     if(!alreadySaved) {
-      setSavingPost(true);
 
       client
         .patch(id)
@@ -36,9 +32,16 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
         .commit()
         .then(() => {
           window.location.reload();
-          setSavingPost(false);
         })
     }
+  }
+
+  const deltePin = (id) => {
+    client
+      .delete(id)
+      .then(() => {
+        window.location.reload();
+      })
   }
 
   return (
@@ -73,7 +76,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
               ): (
                 <button 
                 onClick={(e) => {
-                  e.stopPropagation()
+                  e.stopPropagation();
                   savePin(_id);
                 }} 
                   type="button" 
@@ -91,17 +94,34 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save }}) => {
                   className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:100 hover:shadow-md"
                 >
                   <BsFillArrowUpRightCircleFill />
+                  {destination.length > 20 ? destination.sliceslice(8, 20) : destination.slice(8)}
                 </a>
+              )}
+              {postedBy?._id === user.googleId && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagataion();
+                    deletePin(_id);
+                  }}
+                  className="bg-white opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-md outline-none"
+                >
+                  <AiTwotoneDelete />
+                </button>
               )}
             </div>
           </div>
         )}
       </div>
+      <Link to={`user-profile/${user?._id}`} className="flex gap-2 mt-2 items-center">
+
+      </Link>
       <img 
         className="rounded-lg w-full" 
-        alt="user-post" 
-        src={urlFor(image).width(250).url()}
+        alt="user-profile" 
+        src={postedBy?.image}
       />
+      <p className="font-semibold capitalize">{postedBy?.userName}</p>
     </div>
   )
 };
