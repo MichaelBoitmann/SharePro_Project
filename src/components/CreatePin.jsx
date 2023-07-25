@@ -23,7 +23,13 @@ const CreatePin = ({ user }) => {
   const uploadImage = (e) => {
     const { type } = e.target.files[0];
 
-    if(type === 'image/png' || type === 'image/svg' || type ==='image/jpeg' || type === 'image/giff' || type === 'image/tiff') {
+    if (
+      type === 'image/png' || 
+      type === 'image/svg' || 
+      type ==='image/jpeg' || 
+      type === 'image/giff' || 
+      type === 'image/tiff'
+    ) {
       setWrongImageType(false);
       setLoading(true);
 
@@ -42,7 +48,7 @@ const CreatePin = ({ user }) => {
   };
 
   const savePin = () => {
-    if(title && about && destination && imageAsset?_id && category) {
+    if(title && about && destination && imageAsset?._id && category ) {
       const doc = {
         _type: 'pin',
         title,
@@ -62,6 +68,15 @@ const CreatePin = ({ user }) => {
         },
         category,
       }
+
+      client.create(doc)
+        .then(() => {
+          navigate('/')
+        })
+    } else {
+      setFields(true);
+
+      setTimeout(() => setFields(false), 2000)
     }
   }
 
