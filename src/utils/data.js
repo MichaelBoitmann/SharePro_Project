@@ -90,7 +90,7 @@ export const pinDetailQuery = (pinId) => {
       userName,
       image
     },
-   save[]{
+    save[]{
       postedBy->{
         _id,
         userName,

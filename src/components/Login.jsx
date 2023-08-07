@@ -32,17 +32,17 @@ const Login = () => {
   // }
 
   useEffect(() => {
-    // const initializeGoogleSignIn = async () => {
-    //   await new Promise((resolve, reject) => {
-    //     const script = document.createElement('script');
-    //     script.src = 'https://accounts.google.com/gsi/client';
-    //     script.async = true;
-    //     script.onload = resolve;
-    //     script.onerror = reject;
-    //     document.body.appendChild(script);
-    //   });    
-    //   initializeGoogleSignIn();
-    // };
+    const initializeGoogleSignIn = async () => {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });    
+      initializeGoogleSignIn();
+    };
 
       google.accounts.id.initialize({      
       client_id: "545827459244-qaeo79atr6a8si971h8imbqnbja46dmd.apps.googleusercontent.com",
