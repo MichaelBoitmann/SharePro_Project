@@ -15,8 +15,6 @@ const PinDetail = ({ user }) => {
   const [addingComment, setAddingComment] = useState(false);
   const { pinId } = useParams();
 
-  if(!pinDetail) return <Spinner message="Loading pin...." />
-
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
 
@@ -33,8 +31,6 @@ const PinDetail = ({ user }) => {
       });
     }
   }
-
-  if(!pinDetail) return <Spinner message="Loading pin...." />
 
   useEffect(() => {
     fetchPinDetails();
@@ -56,6 +52,12 @@ const PinDetail = ({ user }) => {
         });
     }
   };
+
+
+  if(!pinDetail) 
+    return (
+      <Spinner message="Loading pin...." />
+    );
 
   return (
     <>
@@ -83,7 +85,7 @@ const PinDetail = ({ user }) => {
                 </a>
               </div>
               <a href={pinDetail.destination} target="blank" rel="noreferrer">
-                {pinDetail.destination?Comment.slice(8)}
+                {pinDetail?.destination?.slice(8)}
               </a>
             </div>
             <div>
@@ -98,7 +100,7 @@ const PinDetail = ({ user }) => {
                 src={pinDetail?.postedBy.image}
                 alt="user-profile"
               />
-              <p className="font-semibold capitalize">{postedBy?.userName}</p>
+              <p className="font-semibold capitalize">{pinDetail?.postedBy?.userName}</p>
             </Link>
             <h2 className="mt-5 text-2-xl">Comments</h2>
             <div className="max-h-370 overflow-y-auto">
@@ -138,13 +140,13 @@ const PinDetail = ({ user }) => {
           </div>
         </div>
       )}
-      {pins?.length > 0 && (
-        <h2 className="text-center font-bold text-2xl mt-8 mb-4">
-          More like this
-        </h2>
-      )}
-      {pins ? (
-        <MasonryLayout pins={pins} />
+      {pins?.length > 0 ? (
+        <>
+          <h2 className="text-center font-bold text-2xl mt-8 mb-4">
+            More like this
+          </h2>
+          <MasonryLayout pins={pins} />
+        </>
       ) : (
         <Spinner message="Loading more pins" />
       )}
